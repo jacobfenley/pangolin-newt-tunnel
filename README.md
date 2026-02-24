@@ -135,6 +135,65 @@ docker compose up -d
 
 ---
 
+## Removing the Tunnel
+
+### Stop and remove the container
+
+Run this from inside the `pangolin-newt-tunnel` directory:
+
+```bash
+docker compose down
+```
+
+This stops the container and removes it. The image and credential files remain on disk but the tunnel is no longer running and will not start on reboot.
+
+### Remove the Docker image
+
+```bash
+docker rmi fosrl/newt:latest
+```
+
+### Remove credential files
+
+```bash
+rm newt.env newt-config.secret
+```
+
+### Remove the repo directory
+
+```bash
+cd ~
+rm -rf pangolin-newt-tunnel
+```
+
+### Remove Docker entirely (optional)
+
+Only do this if you no longer need Docker on the server for anything else.
+
+```bash
+sudo systemctl stop docker
+sudo systemctl disable docker
+sudo apt-get purge -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get autoremove -y
+sudo rm -rf /var/lib/docker /etc/docker /etc/apt/keyrings/docker.gpg /etc/apt/sources.list.d/docker.list
+```
+
+### Full teardown — all of the above in one go
+
+```bash
+docker compose down
+docker rmi fosrl/newt:latest
+cd ~
+rm -rf pangolin-newt-tunnel
+sudo systemctl stop docker
+sudo systemctl disable docker
+sudo apt-get purge -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get autoremove -y
+sudo rm -rf /var/lib/docker /etc/docker /etc/apt/keyrings/docker.gpg /etc/apt/sources.list.d/docker.list
+```
+
+---
+
 ## Troubleshooting
 
 **Container exits immediately after starting**
