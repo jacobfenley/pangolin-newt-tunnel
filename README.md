@@ -18,9 +18,8 @@ This package sets up the Pangolin Newt tunnel agent as a persistent service on a
 ## Quick Start — Fresh Server (Recommended)
 
 ```bash
-git clone <repo-url>
-cd <repo-directory>
-chmod +x install.sh setup.sh update.sh
+git clone https://github.com/jacobfenley/pangolin-newt-tunnel.git
+cd pangolin-newt-tunnel
 sudo ./install.sh
 ```
 
