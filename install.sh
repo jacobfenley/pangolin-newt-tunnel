@@ -4,8 +4,9 @@ set -e
 # ============================================================
 # Pangolin Newt — Full Server Setup
 # ============================================================
-# Installs Docker (if needed), configures boot persistence,
-# runs the credential wizard, and starts the tunnel.
+# Updates system packages, installs Docker (if needed),
+# configures boot persistence, runs the credential wizard,
+# and starts the tunnel.
 # Target: Debian/Ubuntu (Hetzner VPS or compatible)
 # ============================================================
 
@@ -49,6 +50,21 @@ if ! is_debian_based; then
 fi
 
 info "Detected OS: $PRETTY_NAME"
+
+# ---- System update ------------------------------------------
+
+info "Updating package lists..."
+apt-get update -qq
+
+info "Upgrading installed packages (this may take a few minutes)..."
+DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq \
+    -o Dpkg::Options::="--force-confdef" \
+    -o Dpkg::Options::="--force-confold"
+
+info "Removing unused packages..."
+apt-get autoremove -y -qq
+
+info "System is up to date."
 
 # ---- Docker install -----------------------------------------
 

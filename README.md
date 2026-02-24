@@ -23,7 +23,7 @@ cd pangolin-newt-tunnel
 sudo ./install.sh
 ```
 
-`install.sh` installs Docker if needed, configures it to start on boot, runs the credential wizard, and starts the tunnel. After it completes, the tunnel is live and will survive reboots automatically.
+`install.sh` updates all system packages, installs Docker if needed, configures it to start on boot, runs the credential wizard, and starts the tunnel. After it completes, the tunnel is live and will survive reboots automatically. The package update step may take a few minutes on a fresh VPS.
 
 ---
 
