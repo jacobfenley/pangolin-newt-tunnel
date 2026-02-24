@@ -33,6 +33,7 @@ services:
     profiles:
       - test
     restart: "no"
+    network_mode: host
     env_file:
       - newt.env
     command: >
