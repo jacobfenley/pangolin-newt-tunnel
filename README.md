@@ -15,7 +15,7 @@ This package sets up the Pangolin Newt tunnel agent as a persistent service on a
 
 ---
 
-## Quick Start — Fresh Server (Recommended)
+## Quick Start
 
 ```bash
 git clone https://github.com/jacobfenley/pangolin-newt-tunnel.git
@@ -23,18 +23,9 @@ cd pangolin-newt-tunnel
 sudo ./install.sh
 ```
 
-`install.sh` updates all system packages, installs Docker if needed, configures it to start on boot, runs the credential wizard, and starts the tunnel. After it completes, the tunnel is live and will survive reboots automatically. The package update step may take a few minutes on a fresh VPS.
+Always use `install.sh`. It handles everything: system package updates, Docker installation, boot persistence, credential setup, and starting the tunnel. If Docker is already installed it skips that step automatically — there is no reason to run `setup.sh` or `docker compose` directly on a first install.
 
----
-
-## Quick Start — Docker Already Installed
-
-```bash
-chmod +x setup.sh update.sh
-./setup.sh
-sudo systemctl enable docker
-docker compose up -d
-```
+The package update step may take a few minutes on a fresh VPS. The script will prompt you for your Pangolin credentials partway through.
 
 ---
 
