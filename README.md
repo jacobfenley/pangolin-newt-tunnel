@@ -73,20 +73,21 @@ This starts a minimal web server on port 17480. It serves a single page confirmi
 
 ### Step 2 — Create a Pangolin resource
 
-Log into your Pangolin dashboard and navigate to your organization. Go to Resources → Add Resource. Fill in:
+Log into your Pangolin dashboard and go to Resources → Create Resource. Fill in the form:
 
+- **Type:** HTTPS Resource
 - **Name:** anything descriptive, e.g. `tunnel-test`
 - **Subdomain:** something you will remember, e.g. `test`
-- **Domain:** select your configured domain from the dropdown
+- **Base Domain:** select your configured domain from the dropdown
 
-Once created, open the resource and go to the **Proxy** tab. Configure the target:
+Under **Targets Configuration**, the target row has four fields inline — fill them in as follows:
 
-- **Site:** select your site
+- **Site:** select your site from the first dropdown
 - **Protocol:** `http`
 - **Host:** `localhost`
 - **Port:** `17480`
 
-Save the target. Wait approximately 30 seconds for DNS and TLS to provision.
+Click **Create Resource**. Wait approximately 30 seconds for DNS and TLS to provision.
 
 ### Step 3 — Verify
 
