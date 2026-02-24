@@ -1,0 +1,64 @@
+services:
+  newt:
+    image: fosrl/newt:latest
+    container_name: newt
+    restart: unless-stopped
+    network_mode: host
+    env_file:
+      - newt.env
+
+    # --- ALTERNATIVE: ENV VAR MODE ---
+    # Remove env_file above and uncomment below for CI or scripted deployments.
+    # All three vars must be set in the environment before running docker compose up.
+    # environment:
+    #   - PANGOLIN_ENDPOINT=${PANGOLIN_ENDPOINT}
+    #   - NEWT_ID=${NEWT_ID}
+    #   - NEWT_SECRET=${NEWT_SECRET}
+
+    # --- ALTERNATIVE: COMPOSE SECRETS MODE ---
+    # More secure for production. Remove env_file above.
+    # Requires newt-config.secret to exist (written by setup.sh or manually).
+    # environment:
+    #   - CONFIG_FILE=/run/secrets/newt-config
+    # secrets:
+    #   - newt-config
+
+  # --- SMOKE TEST SERVICE ---
+  # Not started by default. Run with: docker compose --profile test up -d
+  # Stop with: docker compose --profile test down
+  # WARNING: Do not use this for anything real. Stop it when testing is done.
+  newt-test-server:
+    image: python:3-alpine
+    container_name: newt-test-server
+    profiles:
+      - test
+    restart: "no"
+    env_file:
+      - newt.env
+    command: >
+      sh -c "echo '<html><head><title>Newt Tunnel Test</title>
+      <style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;
+      display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}
+      .card{background:#1e293b;padding:2rem 3rem;border-radius:1rem;
+      border:2px solid #22c55e;text-align:center;}
+      h1{color:#22c55e;font-size:2rem;margin-bottom:0.5rem;}
+      .label{color:#94a3b8;font-size:0.9rem;margin-top:1rem;}</style></head>
+      <body><div class=\"card\"><h1>&#10003; Tunnel is working</h1>
+      <p>Your Newt connection is live and routing traffic correctly.</p>
+      <p class=\"label\">Node: ${NEWT_LABEL:-unnamed} &nbsp;|&nbsp;
+      Port: 17480</p></div></body></html>' > /tmp/index.html &&
+      python3 -m http.server 17480 --directory /tmp"
+
+  # --- COMPANION APP EXAMPLE ---
+  # Uncomment and modify to add your own application alongside Newt.
+  # In Pangolin, create a resource and set the proxy target to localhost:PORT.
+  # myapp:
+  #   image: your-app-image
+  #   container_name: myapp
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+
+# secrets:
+#   newt-config:
+#     file: ./newt-config.secret
